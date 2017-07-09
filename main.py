@@ -10,7 +10,6 @@ import os
 
 PATH = "/media/trent/3832-6331/"
 CSV_INPUT = PATH + "/DATA.CSV"
-#~ CSV_INPUT = "/home/trent/DATA.CSV"
 DATA_FILE = "data.txt"
 data = []
 index = []
@@ -87,29 +86,34 @@ def mv():
 	name = CSV_INPUT
 	print name
 	print PATH + "DATA." + get_time() + "CSV"
-	
-if __name__ == "__main__":
+
+def main_io():
+	global data 
 	data = open_data()
 	update()
-	#~ for i in data:
-		#~ print i
 	save_data(data)
 	mv()
 	
-	#~ exit(0)
-
+if __name__ == "__main__":
+	
 	parser = OptionParser()
 	parser.add_option("-d", "--day", dest="DAY", default="0")
+	parser.add_option("-f", "--file", dest="FILE", default=CSV_INPUT)
 	parser.add_option(
 		"-l",
 		"--list",
 		action="store_true",
 		dest="LIST",
 		help="list raw data without display graph")
+	
 	(options, args) = parser.parse_args()
 	day = int(options.DAY)
+	CSV_INPUT = options.FILE
 	data = data [-144 * day : ]
 	b_list = options.LIST if options.LIST is not None else False
+	
+	main_io()
+	
 	if b_list:
 		for i in data:
 			print i
