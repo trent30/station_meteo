@@ -100,11 +100,20 @@ if __name__ == "__main__":
 
 	parser = OptionParser()
 	parser.add_option("-d", "--day", dest="DAY", default="0")
+	parser.add_option(
+		"-l",
+		"--list",
+		action="store_true",
+		dest="LIST",
+		help="list raw data without display graph")
 	(options, args) = parser.parse_args()
 	day = int(options.DAY)
 	data = data [-144 * day : ]
-	#~ print data
-	#~ exit(0)
+	b_list = options.LIST if options.LIST is not None else False
+	if b_list:
+		for i in data:
+			print i
+		exit(0)
 
 	# Create a new subplot from a grid of 3x1
 	plt.subplot(311)
