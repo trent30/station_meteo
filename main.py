@@ -83,10 +83,11 @@ def get_time():
 			return r
 
 def mv():
-	name = CSV_INPUT
-	print name
-	print PATH + "DATA." + get_time() + "CSV"
-
+	try:
+		os.rename(CSV_INPUT, PATH + "DATA." + get_time() + "CSV")
+	except:
+		print "rename fail."
+		
 def main_io():
 	global data 
 	data = open_data()
@@ -99,6 +100,7 @@ if __name__ == "__main__":
 	parser = OptionParser()
 	parser.add_option("-d", "--day", dest="DAY", default="0")
 	parser.add_option("-f", "--file", dest="FILE", default=CSV_INPUT)
+	parser.add_option("-o", "--file_output", dest="FILE_OUTPUT", default=DATA_FILE)
 	parser.add_option(
 		"-l",
 		"--list",
@@ -109,10 +111,11 @@ if __name__ == "__main__":
 	(options, args) = parser.parse_args()
 	day = int(options.DAY)
 	CSV_INPUT = options.FILE
-	data = data [-144 * day : ]
+	DATA_FILE = options.FILE_OUTPUT
 	b_list = options.LIST if options.LIST is not None else False
 	
 	main_io()
+	data = data [-144 * day : ]
 	
 	if b_list:
 		for i in data:
