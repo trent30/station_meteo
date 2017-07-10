@@ -124,23 +124,31 @@ if __name__ == "__main__":
 
 	# Create a new subplot from a grid of 3x1
 	plt.subplot(311)
-	
-	plt.ylabel("frigo")
-	plt.grid(True)
 	abscisse = datettimetox(data)
-	plt.plot(abscisse, select_one_field(data, 2), color="blue", linewidth=1.0, linestyle="-")
-	plt.legend(loc='upper left', frameon=False)
+	legend = 'right'
 	
-	plt.subplot(312)
 	plt.ylabel("exterieur")
 	plt.grid(True)
 	plt.plot(abscisse, select_one_field(data, 4), color="red", linewidth=1.0, linestyle="-")
 	plt.legend(loc='upper left', frameon=False)
+	ax = plt.gca()
+	ax.yaxis.set_ticks_position(legend)
+	
+	plt.subplot(312)
+	plt.ylabel("frigo")
+	plt.grid(True)
+	plt.plot(abscisse, select_one_field(data, 2), color="blue", linewidth=1.0, linestyle="-")
+	plt.legend(loc='upper left', frameon=False)
+	ax = plt.gca()
+	ax.yaxis.set_ticks_position(legend)
+	
 
 	plt.subplot(313)
 	plt.ylabel("humidite")
 	plt.plot(abscisse, select_one_field(data, 1), color="blue", linewidth=1.0, linestyle="-", label="h_frigo")
 	plt.plot(abscisse, select_one_field(data, 3), color="red", linewidth=1.0, linestyle="-", label="h_dehors")
 	plt.legend(loc='upper left', frameon=False)
+	ax = plt.gca()
+	ax.yaxis.set_ticks_position(legend)
 
 	plt.show()
