@@ -70,7 +70,7 @@ def open_data():
 def select_one_field(d, num_field):
 	r = []
 	for i in d:
-		r.append(i[num_field])
+		r.append(float(i[num_field]))
 	return r
 
 def get_time():
@@ -95,33 +95,8 @@ def main_io():
 	save_data(data)
 	mv()
 	
-if __name__ == "__main__":
+def normal_display():
 	
-	parser = OptionParser()
-	parser.add_option("-d", "--day", dest="DAY", default="0")
-	parser.add_option("-f", "--file", dest="FILE", default=CSV_INPUT)
-	parser.add_option("-o", "--file_output", dest="FILE_OUTPUT", default=DATA_FILE)
-	parser.add_option(
-		"-l",
-		"--list",
-		action="store_true",
-		dest="LIST",
-		help="list raw data without display graph")
-	
-	(options, args) = parser.parse_args()
-	day = int(options.DAY)
-	CSV_INPUT = options.FILE
-	DATA_FILE = options.FILE_OUTPUT
-	b_list = options.LIST if options.LIST is not None else False
-	
-	main_io()
-	data = data [-144 * day : ]
-	
-	if b_list:
-		for i in data:
-			print i
-		exit(0)
-
 	# Create a new subplot from a grid of 3x1
 	plt.subplot(311)
 	abscisse = datettimetox(data)
@@ -142,7 +117,6 @@ if __name__ == "__main__":
 	ax = plt.gca()
 	ax.yaxis.set_ticks_position(legend)
 	
-
 	plt.subplot(313)
 	plt.ylabel("humidite")
 	plt.plot(abscisse, select_one_field(data, 1), color="blue", linewidth=1.0, linestyle="-", label="h_frigo")
@@ -152,3 +126,106 @@ if __name__ == "__main__":
 	ax.yaxis.set_ticks_position(legend)
 
 	plt.show()
+
+def display_minmax():
+	ordonne = select_one_field(data, 4)
+	days, l = split_by_day(ordonne)
+	abscisse = datettimetox(days)
+	
+	# Create a new subplot from a grid of 2x1
+	plt.subplot(211)
+	legend = 'right'
+
+	plt.ylabel("exterieur")
+	plt.grid(True)
+	plt.plot(abscisse, max_list(l),  color="red", linewidth=1.0, linestyle="-")
+	plt.plot(abscisse, min_list(l),  color="blue", linewidth=1.0, linestyle="-")
+	plt.legend(loc='upper left', frameon=False)
+	ax = plt.gca()
+	ax.yaxis.set_ticks_position(legend)
+	
+	
+	ordonne = select_one_field(data, 2)
+	days, l = split_by_day(ordonne)
+	print l
+	print max_list(l)
+	print min_list(l)
+	plt.subplot(212)
+	plt.ylabel("frigo")
+	plt.grid(True)
+	plt.plot(abscisse, max_list(l),  color="red", linewidth=1.0, linestyle="-")
+	plt.plot(abscisse, min_list(l),  color="blue", linewidth=1.0, linestyle="-")
+	plt.legend(loc='upper left', frameon=False)
+	ax = plt.gca()
+	ax.yaxis.set_ticks_position(legend)
+	
+	plt.show()
+
+def max_list(l):
+	r = []
+	for i in l:
+		r.append(max(i))
+	return r
+
+def min_list(l):
+	r = []
+	for i in l:
+		r.append(min(i))
+	return r
+	
+def split_by_day(l):
+	global data
+	r = []
+	tmp = []
+	days = []
+	prev = ''
+	cpt = 0
+	for i in data:
+		if i[0][:10] != prev:
+			if len(tmp) > 0:
+				days.append( [ i[0][:10] + '.00.00.00' ])
+				r.append(tmp)
+			tmp = []
+			prev = i[0][:10]
+		tmp.append(l[cpt])
+		cpt += 1
+	return days, r
+
+if __name__ == "__main__":
+	
+	parser = OptionParser()
+	parser.add_option("-d", "--day", dest="DAY", default="0")
+	parser.add_option("-f", "--file", dest="FILE", default=CSV_INPUT)
+	parser.add_option("-o", "--file_output", dest="FILE_OUTPUT", default=DATA_FILE)
+	parser.add_option(
+		"-l",
+		"--list",
+		action="store_true",
+		dest="LIST",
+		help="list raw data without display graph")
+	parser.add_option(
+		"-m",
+		"--minmax",
+		action="store_true",
+		dest="MINMAX",
+		help="display only minimum and maximum by day")
+	
+	(options, args) = parser.parse_args()
+	day = int(options.DAY)
+	CSV_INPUT = options.FILE
+	DATA_FILE = options.FILE_OUTPUT
+	b_list = options.LIST if options.LIST is not None else False
+	minmax = options.MINMAX if options.MINMAX is not None else False	
+
+	main_io()
+	data = data [-144 * day : ]
+	
+	if b_list:
+		for i in data:
+			print i
+		exit(0)
+
+	if minmax:
+		display_minmax()
+	else:
+		normal_display()
