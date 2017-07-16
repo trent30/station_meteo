@@ -208,7 +208,7 @@ if __name__ == "__main__":
 		"--minmax",
 		action="store_true",
 		dest="MINMAX",
-		help="display only minimum and maximum by day")
+		help="display only minimum and maximum per day")
 	
 	(options, args) = parser.parse_args()
 	day = int(options.DAY)
@@ -221,6 +221,7 @@ if __name__ == "__main__":
 	data = data [-144 * day : ]
 	
 	if b_list:
+		print "|\tdate\t|\th1\t|\tt1\t|\th2\t|\tt2\t|"
 		for i in data:
 			print i
 		exit(0)
