@@ -147,9 +147,6 @@ def display_minmax():
 	
 	ordonne = select_one_field(data, 2)
 	days, l = split_by_day(ordonne)
-	print l
-	print max_list(l)
-	print min_list(l)
 	plt.subplot(212)
 	plt.ylabel("frigo")
 	plt.grid(True)
@@ -191,12 +188,20 @@ def split_by_day(l):
 		cpt += 1
 	return days, r
 
+def where_one_day(day):
+	r = []
+	for i in data:
+		if i[0][:10] == day:
+			r.append(i)
+	return r
+
 if __name__ == "__main__":
 	
 	parser = OptionParser()
-	parser.add_option("-d", "--day", dest="DAY", default="0")
-	parser.add_option("-f", "--file", dest="FILE", default=CSV_INPUT)
-	parser.add_option("-o", "--file_output", dest="FILE_OUTPUT", default=DATA_FILE)
+	parser.add_option("-d", "--day", dest="DAY", default="0", help="select only N days before now")
+	parser.add_option("-f", "--file", dest="FILE", default=CSV_INPUT, help="input file (overwrite CSV_INPUT variable)")
+	parser.add_option("-o", "--file_output", dest="FILE_OUTPUT", default=DATA_FILE, help="default is data.txt")
+	parser.add_option("-s", "--select_one_day", dest="ONE_DAY", default="", help="select one day DD.MM.YYYY")
 	parser.add_option(
 		"-l",
 		"--list",
@@ -212,13 +217,17 @@ if __name__ == "__main__":
 	
 	(options, args) = parser.parse_args()
 	day = int(options.DAY)
+	one_day = options.ONE_DAY
 	CSV_INPUT = options.FILE
 	DATA_FILE = options.FILE_OUTPUT
 	b_list = options.LIST if options.LIST is not None else False
 	minmax = options.MINMAX if options.MINMAX is not None else False	
 
 	main_io()
-	data = data [-144 * day : ]
+	if one_day == "":
+		data = data [-150 * day : ]
+	else:
+		data = where_one_day(one_day)
 	
 	if b_list:
 		print "|\tdate\t|\th1\t|\tt1\t|\th2\t|\tt2\t|"
