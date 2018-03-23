@@ -3,13 +3,13 @@
 
 Output with python script using matplotlib.
 -------------------------------------------
-![](file:///home/trent/lang/python/station_meteo/arduino/output.svg)
+![](https://raw.githubusercontent.com/trent30/station_meteo/master/arduino/output.svg)
 
 Pictures
 --------
-![](file:///home/trent/lang/python/station_meteo/arduino/sm_01.jpg)![](file:///home/trent/lang/python/station_meteo/arduino/sm_02.jpg)
+![](https://github.com/trent30/station_meteo/blob/master/arduino/sm_01.jpg?raw=true)![](https://github.com/trent30/station_meteo/blob/master/arduino/sm_02.jpg?raw=true)
 
 Schema
 ------
-![](file:///home/trent/lang/python/station_meteo/arduino/schema.svg)
+![](https://github.com/trent30/station_meteo/blob/master/arduino/sm_02.jpg?raw=true)
 
