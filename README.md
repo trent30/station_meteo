@@ -11,5 +11,5 @@ Pictures
 
 Schema
 ------
-![](https://github.com/trent30/station_meteo/blob/master/arduino/sm_02.jpg?raw=true)
+![](https://raw.githubusercontent.com/trent30/station_meteo/master/arduino/schema.svg)
 
