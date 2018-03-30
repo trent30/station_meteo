@@ -5,7 +5,7 @@ Output with python script using matplotlib.
 -------------------------------------------
 ![](https://raw.githubusercontent.com/trent30/station_meteo/master/arduino/output.png)
 
-Options:
+## Options:
   
   -h, --help            show this help message and exit
   
@@ -13,11 +13,11 @@ Options:
   
   -f FILE, --file=FILE  input file (overwrite CSV_INPUT variable)
   
-  -o FILE_OUTPUT, --file_output=FILE_OUTPUT
-                        default is data.txt
+  -o FILE_OUTPUT, --file_output=FILE_OUTPUT 
+                        (default is data.txt)
   
-  -s ONE_DAY, --select_one_day=ONE_DAY
-                        select one day DD.MM.YYYY
+  -s ONE_DAY, --select_one_day=ONE_DAY 
+                        (select one day DD.MM.YYYY)
   
   -l, --list            list raw data without display graph
   
